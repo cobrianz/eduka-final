@@ -3,8 +3,21 @@ require './header/header.php';
 
 ?>
 
+<div class="container cart">
+<?php
+
+if (isset($_SESSION[$product['id']])):
+    $product = $_SESSION[$product['id']];
+   // Fetch products data from the database
+   $fetch_product_query = "SELECT * FROM products WHERE id = $product";
+   $fetch_product_result = mysqli_query($connection, $fetch_product_query);
+
+   // Convert the record into an associative array
+   while ($product_record = mysqli_fetch_assoc($fetch_product_result)):
+
+?>
+
     <!-- Cart Items -->
-    <div class="container cart">
       <table>
         <tr>
           <th>Product</th>
@@ -16,8 +29,8 @@ require './header/header.php';
             <div class="cart-info">
               <img src="./images/product-6.jpg" alt="" />
               <div>
-                <p>Boy’s T-Shirt</p>
-                <span>Price: Ksh. 60.00</span> <br />
+                <p> <?= $product_record['name'] ?></p>
+                <span>Price: Ksh. <?= $product_record['price'] ?></span> <br />
                 <a href="#">remove</a>
               </div>
             </div>
@@ -26,6 +39,7 @@ require './header/header.php';
           <td>Ksh. 60.00</td>
         </tr>
       </table>
+      <?php endwhile ?>
       <div class="total-price">
         <table>
           <tr>
@@ -44,7 +58,7 @@ require './header/header.php';
         <a href="#" class="checkout btn">Proceed To Checkout</a>
       </div>
     </div>
-
+    <?php endif ?>
     <!-- Latest Products -->
     <section class="section featured">
       <div class="top container">
