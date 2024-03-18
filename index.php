@@ -92,7 +92,7 @@ unset($_SESSION['message-data']);
       <div class="product-info">
         <span>MEN'S CLOTHES</span>
         <a href="productDetails.html">Quis Nostrud Exercitation</a>
-        <h4>$700</h4>
+        <h4>ksh. 700</h4>
       </div>
       <ul class="icons">
         <li><i class="bx bx-heart"></i></li>
@@ -111,7 +111,7 @@ unset($_SESSION['message-data']);
       <div class="product-info">
         <span>MEN'S CLOTHES</span>
         <a href="">Sonata White Men’s Shirt</a>
-        <h4>$800</h4>
+        <h4>ksh. 800</h4>
       </div>
       <ul class="icons">
         <li><i class="bx bx-heart"></i></li>
@@ -128,7 +128,7 @@ unset($_SESSION['message-data']);
       <div class="product-info">
         <span>MEN'S CLOTHES</span>
         <a href="">Concepts Solid Pink Men’s Polo</a>
-        <h4>$150</h4>
+        <h4>ksh. 150</h4>
       </div>
       <ul class="icons">
         <li><i class="bx bx-heart"></i></li>
@@ -146,7 +146,7 @@ unset($_SESSION['message-data']);
       <div class="product-info">
         <span>MEN'S CLOTHES</span>
         <a href="">Edor do eiusmod tempor</a>
-        <h4>$900</h4>
+        <h4>ksh. 900</h4>
       </div>
       <ul class="icons">
         <li><i class="bx bx-heart"></i></li>
@@ -163,7 +163,7 @@ unset($_SESSION['message-data']);
       <div class="product-info">
         <span>MEN'S CLOTHES</span>
         <a href="">Edor do eiusmod tempor</a>
-        <h4>$100</h4>
+        <h4>ksh. 100</h4>
       </div>
       <ul class="icons">
         <li><i class="bx bx-heart"></i></li>
@@ -180,7 +180,7 @@ unset($_SESSION['message-data']);
       <div class="product-info">
         <span>MEN'S CLOTHES</span>
         <a href="">Edor do eiusmod tempor</a>
-        <h4>$500</h4>
+        <h4>ksh. 500</h4>
       </div>
       <ul class="icons">
         <li><i class="bx bx-heart"></i></li>
@@ -198,7 +198,7 @@ unset($_SESSION['message-data']);
       <div class="product-info">
         <span>MEN'S CLOTHES</span>
         <a href="">Edor do eiusmod tempor</a>
-        <h4>$200</h4>
+        <h4>ksh. 200</h4>
       </div>
       <ul class="icons">
         <li><i class="bx bx-heart"></i></li>
@@ -215,7 +215,7 @@ unset($_SESSION['message-data']);
       <div class="product-info">
         <span>MEN'S CLOTHES</span>
         <a href="">Edor do eiusmod tempor</a>
-        <h4>$560</h4>
+        <h4>ksh. 560</h4>
       </div>
       <ul class="icons">
         <li><i class="bx bx-heart"></i></li>
@@ -256,7 +256,7 @@ unset($_SESSION['message-data']);
 
     <?php
     // Fetch products data from the database
-    $fetch_product_query = "SELECT * FROM products";
+     $fetch_product_query = "SELECT * FROM products";
     $fetch_product_result = mysqli_query($connection, $fetch_product_query);
 
     // Convert the record into an associative array
@@ -338,15 +338,15 @@ unset($_SESSION['message-data']);
       <form id="contact__form" action="contact-logic.php" method="post">
         <div class="form__item">
           <label class="form__item--label">Name</label>
-          <input type="text" name="name" class="input" value="<?= $name ?>">
+          <input type="text" name="name" class="input" value="<?= $name ?>" required>
         </div>
         <div class="form__item">
           <label class="form__item--label">Email</label>
-          <input type="email" name="email" class="input" value="<?= $email ?>">
+          <input type="email" name="email" class="input" value="<?= $email ?>" required>
         </div>
         <div class="form__item">
           <label class="form__item--label">Message</label>
-          <textarea name="message" id="message" cols="30" rows="15" value="<?= $message ?>"></textarea>
+          <textarea name="message" id="message" cols="30" rows="15" value="<?= $message ?>" required></textarea>
         </div>
         <button type="submit" id="contact__submit" class="form__submit" name="submit">send</button>
       </form>

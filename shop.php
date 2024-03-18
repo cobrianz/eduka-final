@@ -1,8 +1,71 @@
 <?php
 require './header/header.php'
+?>
+<?php
 
-  ?>
-<!-- All Products -->
+// Query to fetch data from your MySQL database
+$sql = "SELECT id, name, description, details, price, discount, category, thumbnail FROM products";
+$result = mysqli_query($connection, $sql);
+
+$data = array();
+if ($result->num_rows > 0) {
+  // Fetch data row by row
+  while ($row = $result->fetch_assoc()) {
+    // Build the structure for each item
+    $item = array(
+      "id" => $row["id"],
+      "name" => $row["name"],
+      "description" => $row["description"],
+      "details" => $row["details"],
+      "price" => $row["price"], // Convert price to integer if necessary
+      "discount" => $row["discount"],
+      "category" => $row["category"],
+      "thumbnail" => $row["thumbnail"],
+    );
+    // Add the item to the data array
+    $data[] = $item;
+  }
+} else {
+  echo "";
+}
+
+// Close the connection
+
+$connection->close();
+$products = json_encode($data);
+?>
+
+<script>
+  var products = <?php echo $products; ?>;
+  console.log(products);
+// Dynamically generate product items
+document.addEventListener('DOMContentLoaded', function() {
+    var productContainer = document.getElementById('productContainer');
+    products.forEach(function(product) {
+      var productItem = `
+        <div class="product-item" dataset="${product.id}">
+          <div class="overlay">
+            <a href="${product.thumbnail}" class="product-thumb">
+              <img src="./products/${product.thumbnail}" alt="${product.name}" />
+            </a>
+            <span class="discount">${product.discount}</span>
+          </div>
+          <div class="product-info">
+            <span>${product.category}</span>
+            <a href="">${product.name}</a>
+            <h4>Ksh. ${product.price}</h4>
+          </div>
+          <ul class="icons">
+            <li><i class="bx bx-heart"></i></li>
+            <li><i class="bx bx-search"></i></li>
+            <li><i class="bx bx-cart"></i></li>
+          </ul>
+        </div>`;
+      productContainer.insertAdjacentHTML('beforeend', productItem);
+    });
+  });
+</script>
+
 <section class="section all-products" id="products">
   <div class="top container">
     <h1>All Products</h1>
@@ -17,50 +80,8 @@ require './header/header.php'
       <span><i class="bx bx-chevron-down"></i></span>
     </form>
   </div>
-  <div class="product-center container">
-
-    <?php
-    // Fetch products data from the database
-    $fetch_product_query = "SELECT * FROM products";
-    $fetch_product_result = mysqli_query($connection, $fetch_product_query);
-
-    // Convert the record into an associative array
-    while ($product_record = mysqli_fetch_assoc($fetch_product_result)):
-      ?>
-
-      <div class="product-item">
-        <div class="overlay">
-          <a href="" class="product-thumb">
-            <img src="./products/<?php echo $product_record['thumbnail'] ?>" alt="" />
-          </a>
-          <span class="discount">
-            <?php if (!$product_record['discount'] == '') {
-              echo $product_record['discount'];
-            } else {
-              echo "";
-
-            } ?>
-          </span>
-        </div>
-        <div class="product-info">
-          <span>
-            <?= $product_record['category'] ?>
-          </span>
-          <a href="">
-            <?= $product_record['name'] ?>
-          </a>
-          <h4>
-            <?= $product_record['price'] ?>
-          </h4>
-        </div>
-        <ul class="icons">
-          <li><i class="bx bx-heart"></i></li>
-          <li><i class="bx bx-search"></i></li>
-          <li><i class="bx bx-cart"></i></li>
-        </ul>
-      </div>
-    <?php endwhile; ?>
-
+  <div class="product-center container" id="productContainer">
+    <!-- Product items will be dynamically added here -->
   </div>
 </section>
 <section class="pagination">
@@ -78,6 +99,4 @@ require './footer/footer.php';
 <!-- Custom Script -->
 <script src="./js/index.js"></script>
 <script src="./js/addtocart.js"></script>
-</body>
 
-</html>

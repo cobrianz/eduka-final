@@ -45,7 +45,7 @@ unset($_SESSION['product-data']);
                 <label for="name">Product Details *</label>
                 <textarea name="details" id="" cols="30" rows="10"><?=$details?></textarea>
                 <label for="price">Price *</label>
-                <input type="text" name="price" value="<?=$price?>">
+                <input type="number" min="1" name="price" value="<?=$price?>">
                 <label for="price">Discount *</label>
                 <input type="text" name="discount" value="<?=$discount?>">
                 <label for="price">Category *</label>

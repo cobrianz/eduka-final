@@ -17,28 +17,28 @@ require './header/header.php';
               <img src="./images/product-6.jpg" alt="" />
               <div>
                 <p>Boy’s T-Shirt</p>
-                <span>Price: $60.00</span> <br />
+                <span>Price: Ksh. 60.00</span> <br />
                 <a href="#">remove</a>
               </div>
             </div>
           </td>
           <td><input type="number" value="1" min="1" /></td>
-          <td>$60.00</td>
+          <td>Ksh. 60.00</td>
         </tr>
       </table>
       <div class="total-price">
         <table>
           <tr>
             <td>Subtotal</td>
-            <td>$200</td>
+            <td>Ksh. 200</td>
           </tr>
           <tr>
             <td>Tax</td>
-            <td>$50</td>
+            <td>Ksh. 50</td>
           </tr>
           <tr>
             <td>Total</td>
-            <td>$250</td>
+            <td>Ksh. 250</td>
           </tr>
         </table>
         <a href="#" class="checkout btn">Proceed To Checkout</a>
@@ -61,7 +61,7 @@ require './header/header.php';
           <div class="product-info">
             <span>MEN'S CLOTHES</span>
             <a href="">Concepts Solid Pink Men’s Polo</a>
-            <h4>$150</h4>
+            <h4>Ksh. 150</h4>
           </div>
           <ul class="icons">
             <li><i class="bx bx-heart"></i></li>
@@ -79,7 +79,7 @@ require './header/header.php';
           <div class="product-info">
             <span>MEN'S CLOTHES</span>
             <a href="">Concepts Solid Pink Men’s Polo</a>
-            <h4>$150</h4>
+            <h4>Ksh. 150</h4>
           </div>
           <ul class="icons">
             <li><i class="bx bx-heart"></i></li>
@@ -96,7 +96,7 @@ require './header/header.php';
           <div class="product-info">
             <span>MEN'S CLOTHES</span>
             <a href="">Concepts Solid Pink Men’s Polo</a>
-            <h4>$150</h4>
+            <h4>Ksh. 150</h4>
           </div>
           <ul class="icons">
             <li><i class="bx bx-heart"></i></li>
@@ -113,7 +113,7 @@ require './header/header.php';
           <div class="product-info">
             <span>MEN'S CLOTHES</span>
             <a href="">Concepts Solid Pink Men’s Polo</a>
-            <h4>$150</h4>
+            <h4>Ksh. 150</h4>
           </div>
           <ul class="icons">
             <li><i class="bx bx-heart"></i></li>

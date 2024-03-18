@@ -45,6 +45,7 @@ li {
 .alert__message {
     width: 100%;
     border-radius: var(--btn-border);
+    margin: 0 auto;
 }
 
 .alert__message p {

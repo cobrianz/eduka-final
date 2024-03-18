@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
             if ($password == $db_password) {
                 //set session for access control
 
-                $_SESSION['user-id'] = $user_record['id'];
+                $_SESSION['user_id'] = $user_record['id'];
                 header('Location: ' . ROOT_URL . 'admin/');
 
             } else {
