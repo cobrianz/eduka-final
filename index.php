@@ -252,51 +252,9 @@ unset($_SESSION['message-data']);
     <p>All the latest picked from designer of our store</p>
   </div>
 
-  <div class="product-center container">
+  <div class="listProduct">
 
-    <?php
-    // Fetch products data from the database
-     $fetch_product_query = "SELECT * FROM products";
-    $fetch_product_result = mysqli_query($connection, $fetch_product_query);
-
-    // Convert the record into an associative array
-    while ($product_record = mysqli_fetch_assoc($fetch_product_result)):
-      ?>
-
-      <div class="product-item">
-        <div class="overlay">
-          <a href="" class="product-thumb">
-            <img src="./products/<?php echo $product_record['thumbnail'] ?>" alt="" />
-          </a>
-          <span class="discount">
-            <?php if (!$product_record['discount'] == '') {
-              echo $product_record['discount'];
-            } else {
-              echo "";
-
-            } ?>
-          </span>
-        </div>
-        <div class="product-info">
-          <span>
-            <?= $product_record['category'] ?>
-          </span>
-          <a href="">
-            <?= $product_record['name'] ?>
-          </a>
-          <h4>
-            <?= $product_record['price'] ?>
-          </h4>
-        </div>
-        <ul class="icons">
-          <li><i class="bx bx-heart"></i></li>
-          <li><i class="bx bx-search"></i></li>
-          <li><i class="bx bx-cart"></i></li>
-        </ul>
-      </div>
-    <?php endwhile; ?>
-
-  </div>
+</div>
 
 
 </section>
@@ -391,5 +349,6 @@ require './footer/footer.php';
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/glide.min.js"></script>
 <script src="./js/slider.js"></script>
 <script src="./js/index.js"></script>
+<script src="../main.js"></script>
 
 </html>

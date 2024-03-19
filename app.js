@@ -68,11 +68,3 @@ asideToggler.addEventListener('click', () => {
     aside.classList.toggle('shop__aside-active');
 });
 ;
-/* 
-
-const passcode_toggler = document.querySelectorAll('#passcode-toggler');
-const passcode= document.querySelectorAll('.passcode');
-
-passcode_toggler.addEventListener('click', () => {
-    passcode.classList.toggle('passcode_active');
-}); */

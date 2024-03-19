@@ -1,17 +1,10 @@
-// Function to fetch cart items from the server
+// Function to fetch cart items from local storage
 function fetchCartItems() {
-    // Make an AJAX request to fetch cart items
-    $.ajax({
-      url: 'get_cart_items.php', // Change the URL to your PHP script that fetches cart items
-      method: 'GET',
-      success: function(response) {
-        // Parse the JSON response and render cart items
-        renderCartItems(response);
-      },
-      error: function(xhr, status, error) {
-        console.error(error);
-      }
-    });
+    // Retrieve cart items from local storage
+    const cartData = JSON.parse(localStorage.getItem('cart')) || [];
+  
+    // Render cart items
+    renderCartItems(cartData);
   }
   
   // Function to render cart items dynamically

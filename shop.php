@@ -1,102 +1,135 @@
 <?php
-require './header/header.php';
+require 'config/database.php';
 ?>
+<!DOCTYPE html>
+<html lang="en">
 
-<?php
-// Query to fetch data from your MySQL database
-$sql = "SELECT id, name, description, details, price, discount, category, thumbnail FROM products";
-$result = mysqli_query($connection, $sql);
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eduka | Shop</title>
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+    <!-- Glide js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.core.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.theme.css">
+    <!-- Custom StyleSheet -->
+    <link rel="stylesheet" href="shop.css">
+</head>
 
-$data = array();
-if ($result->num_rows > 0) {
-  // Fetch data row by row
-  while ($row = $result->fetch_assoc()) {
-    // Build the structure for each item
-    $item = array(
-      "id" => $row["id"],
-      "name" => $row["name"],
-      "description" => $row["description"],
-      "details" => $row["details"],
-      "price" => $row["price"], // Convert price to integer if necessary
-      "discount" => $row["discount"],
-      "category" => $row["category"],
-      "thumbnail" => $row["thumbnail"],
-    );
-    // Add the item to the data array
-    $data[] = $item;
-  }
-} else {
-  echo "";
-}
-
-// Close the connection
-$connection->close();
-$products = json_encode($data);
-?>
-
-<script>
-  var products = <?php echo $products; ?>;
-  console.log(products);
-
-  // Function to add item to cart
-  function addToCart(productId) {
-    console.log('Adding product to cart:', productId);
-    // You can implement your add to cart logic here
-  }
-</script>
-
-<section class="section all-products" id="products">
-  <div class="top container">
-    <h1>All Products</h1>
-    <form>
-      <select>
-        <option value="1">Default Sorting</option>
-        <option value="2">Sort By Price</option>
-        <option value="3">Sort By Popularity</option>
-        <option value="4">Sort By Sale</option>
-        <option value="5">Sort By Rating</option>
-      </select>
-      <span><i class="bx bx-chevron-down"></i></span>
-    </form>
-  </div>
-  <div class="product-center container" id="productContainer">
-    <!-- Product items will be dynamically added here -->
-    <?php foreach ($data as $product): ?>
-      <div class="product-item" dataset="<?php echo $product['id']; ?>">
-        <div class="overlay">
-          <a href="<?php echo $product['thumbnail']; ?>" class="product-thumb">
-            <img src="./products/<?php echo $product['thumbnail']; ?>" alt="<?php echo $product['name']; ?>" />
-          </a>
-          <?php if (!empty($product['discount'])): ?>
-            <span class="discount"><?php echo $product['discount']; ?></span>
-          <?php endif; ?>
+<body class="">
+    <div class="top-nav">
+        <div class="container d-flex">
+            <p>Order Online Or Call Us: (+245) 702764907</p>
+            <ul class="d-flex">
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
         </div>
-        <div class="product-info">
-          <span><?php echo $product['category']; ?></span>
-          <a href="javascript:void(0);" class="product-name" data-id="<?php echo $product['id']; ?>"><?php echo $product['name']; ?></a>
-          <h4>Ksh. <?php echo $product['price']; ?></h4>
+    </div>
+    <div class="container">
+        <header class="navigation">
+            <div class="nav-center container d-flex">
+                <ul class="nav-list d-flex">
+                    <li class="nav-item">
+                        <a href="<?= ROOT_URL ?>" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?= ROOT_URL ?>products_json_fetch.php" class="nav-link">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#terms" class="nav-link">Terms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#about" class="nav-link">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contact" class="nav-link">Contact</a>
+                    </li>
+                    <li class="icons d-flex">
+                        <?php if (isset ($_SESSION['user-id'])): ?>
+                            <a href="account.php" class="icon">
+                                <i class="bx bx-user"></i>
+                            </a>
+                        <?php else: ?>
+                            <a href="login.php" class="icon">
+                                <i class="bx bx-user"></i>
+                            </a>
+                        <?php endif; ?>
+                        <div class="icon">
+                            <i class="bx bx-search"></i>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="icons d-flex">
+                    <?php if (isset ($_SESSION['user-id'])): ?>
+                        <a href="account.php" class="icon">
+                            <i class="bx bx-user"></i>
+                        </a>
+                    <?php else: ?>
+                        <a href="login.php" class="icon">
+                            <i class="bx bx-user"></i>
+                        </a>
+                    <?php endif; ?>
+                    <div class="icon">
+                        <i class="bx bx-search"></i>
+                    </div>
+                </div>
+
+                <div class="hamburger">
+                    <i class="bx bx-menu-alt-left"></i>
+                </div>
+            </div>
+            <div class="icon-cart">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M6 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0h8m-8 0-1-4m9 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-9-4h10l2-7H3m2 7L3 4m0 0-.792-3H1" />
+                </svg>
+                <span>0</span>
+            </div>
+        </header>
+    </div>
+    <div class="listProduct">
+
+    </div>
+    <div class="cartTab">
+        <h1>Shopping Cart</h1>
+        <div class="listCart">
+
         </div>
-        <ul class="icons">
-          <li><i class="bx bx-heart"></i></li>
-          <li><i class="bx bx-search"></i></li>
-          <li><i class="bx bx-cart" onclick="addToCart(<?php echo $product['id']; ?>);"></i></li>
-        </ul>
-      </div>
-    <?php endforeach; ?>
-  </div>
-</section>
+        <div class="btn">
+            <button class="close">CLOSE</button>
+            <button class="checkOut">Check Out</button>
+        </div>
+    </div>
 
-<section class="pagination">
-  <div class="container">
-    <span>1</span> <span>2</span> <span>3</span> <span>4</span>
-    <span><i class="bx bx-right-arrow-alt"></i></span>
-  </div>
-</section>
+    <script src="main.js"></script>
+    <footer class="footer">
+        <div class="row">
+            <div class="col d-flex">
+                <h4>INFORMATION</h4>
+                <a href="">About us</a>
+                <a href="">Contact Us</a>
+                <a href="">Term & Conditions</a>
+                <a href="">Shipping Guide</a>
+            </div>
+            <div class="col d-flex">
+                <h4>USEFUL LINK</h4>
+                <a href="">Online Store</a>
+                <a href="">Customer Services</a>
+                <a href="">Promotion</a>
+                <a href="">Top Brands</a>
+            </div>
+            <div class="col d-flex">
+                <span><i class="bx bxl-facebook-square"></i></span>
+                <span><i class="bx bxl-instagram-alt"></i></span>
+                <span><i class="bx bxl-github"></i></span>
+                <span><i class="bx bxl-twitter"></i></span>
+                <span><i class="bx bxl-pinterest"></i></span>
+            </div>
+        </div>
+    </footer>
+</body>
 
-<?php
-require './footer/footer.php';
-?>
-
-<!-- Custom Script -->
-<script src="./js/index.js"></script>
-<script src="./js/addtocart.js"></script>
+</html>
