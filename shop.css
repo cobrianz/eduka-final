@@ -42,15 +42,17 @@ header{
     font-size: xx-large;
 }
 .listProduct .item img{
-    width: 200px;
-    background: red;
-    filter: drop-shadow(0 50px 20px #0009);
+    width: 60%;
+    margin: auto;
+    padding: 1rem;
 }
 .listProduct{
     margin: 0 auto;
     width: 80vw;
     min-height: 80vh;
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     gap: 20px;
 }
@@ -63,10 +65,16 @@ header{
     display: flex;
     flex-direction: column;
 }
+
 .listProduct .item h2{
-    font-weight: 500;
-    font-size: large;
+  font-weight: 500;
+  font-size: large;
 }
+.listCart .item .discount{
+  background: red;
+}
+
+
 .listProduct .item .price{
     font-size: 2rem;
     padding: 1rem 0;
@@ -80,6 +88,8 @@ header{
     border-radius: 20px;
 }
 
+
+
 /* cart */
 .cartTab{
     width: 400px;
@@ -89,10 +99,13 @@ header{
     top: 0;
     right: -400px;
     bottom: 0;
-    display: grid;
-    grid-template-rows: 70px 1fr 70px;
+   display: flex;
+   justify-content: space-between;
+   flex-direction: column;
     transition: .5s;
 }
+
+
 body.showCart .cartTab{
     right: 0;
 }
@@ -103,6 +116,25 @@ body.showCart .container{
     padding: 20px;
     margin: 0;
     font-weight: 300;
+}
+
+.cartTab .payment{
+  margin: 0 auto;
+  width: 80%;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-self: flex-end;
+
+}
+
+.cartTab .payment div {
+  display: flex;
+justify-content: space-between;
+padding: 1rem;
+font-weight: bold;
+  gap: 1rem;
 }
 .cartTab .btn{
     display: grid;
@@ -147,6 +179,9 @@ body.showCart .container{
 }
 .listCart{
     overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 .listCart::-webkit-scrollbar{
     width: 0;

@@ -98,9 +98,27 @@ require 'config/database.php';
         <div class="listCart">
 
         </div>
+
+        <div class="payment">
+            <h2>Payment</h2>
+            <div id="subtotal">
+                <span>Subtotal</span>
+                <span>Ksh. <span id="subtotalAmount">0</span></span>
+            </div>
+            <div id="tax">
+                <span>Tax</span>
+                <span>Ksh. <span id="taxAmount">0</span></span>
+            </div>
+            <div id="total">
+                <span>Total</span>
+                <span>Ksh. <span id="totalAmount">0</span></span>
+            </div>
+        </div>
+
+
         <div class="btn">
             <button class="close">CLOSE</button>
-            <button class="checkOut">Check Out</button>
+            <button class="checkOut">Buy</button>
         </div>
     </div>
 
