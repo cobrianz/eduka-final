@@ -51,14 +51,21 @@ require 'config/database.php';
                             <a href="account.php" class="icon">
                                 <i class="bx bx-user"></i>
                             </a>
+                            <?php
+                                $id = $_SESSION['user-id'];
+                                $fetch_user_query = "SELECT * FROM users WHERE id = $id";
+                                $run_query = mysqli_query($connection, $fetch_user_query);
+                                $user_record = mysqli_fetch_assoc($run_query);
+                                
+                                ?>
+                                <div class="icon">
+                                <i>Ksh.<b id='balance'><?php echo ' '.$user_record['balance']?> </b></i>
+                            </div>
                         <?php else: ?>
                             <a href="login.php" class="icon">
                                 <i class="bx bx-user"></i>
                             </a>
                         <?php endif; ?>
-                        <div class="icon">
-                            <i class="bx bx-search"></i>
-                        </div>
                     </li>
                 </ul>
 
@@ -67,14 +74,14 @@ require 'config/database.php';
                         <a href="account.php" class="icon">
                             <i class="bx bx-user"></i>
                         </a>
+                        <div class="icon">
+                        <i>Ksh.<b id='balance'><?php echo ' '.$user_record['balance']?> </b></i>
+                        </div>
                     <?php else: ?>
                         <a href="login.php" class="icon">
                             <i class="bx bx-user"></i>
                         </a>
                     <?php endif; ?>
-                    <div class="icon">
-                        <i class="bx bx-search"></i>
-                    </div>
                 </div>
 
                 <div class="hamburger">
@@ -118,7 +125,7 @@ require 'config/database.php';
 
         <div class="btn">
             <button class="close">CLOSE</button>
-            <button class="checkOut">Buy</button>
+            <button class="checkOut" onclick="checkout()">Buy</button>
         </div>
     </div>
 

@@ -33,9 +33,17 @@ unset($_SESSION['update-data']);
             </div>
         </a>
         <ul>
+            <?php
+             if (isset($_SESSION['user-id'])):
+                $id = $_SESSION['user-id'];
+                $fetch_user_query = "SELECT * FROM users WHERE id = $id";
+                $run_query = mysqli_query($connection, $fetch_user_query);
+                $user_record = mysqli_fetch_assoc($run_query);
+            
+            ?>
             <li><a href="<?= ROOT_URL ?>">Home</a></li>
             <li><a href="<?= ROOT_URL ?>shop.php">Shop</a></li>
-            <li><a href="<?= ROOT_URL ?>account.php">Account</a></li>
+            <li>Ksh.<b><?php echo ' '.$user_record['balance']?> </b></li>
             <li><a href="<?= ROOT_URL ?>cart.php"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a></li>
         </ul>
         <i class="fa fa-bars"></i>
@@ -49,11 +57,7 @@ unset($_SESSION['update-data']);
                 <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                 <span>
                     <?php
-                    if (isset($_SESSION['user-id'])):
-                        $id = $_SESSION['user-id'];
-                        $fetch_user_query = "SELECT * FROM users WHERE id = $id";
-                        $run_query = mysqli_query($connection, $fetch_user_query);
-                        $user_record = mysqli_fetch_assoc($run_query);
+                   
                         echo '<h4>' . $user_record['name'] . '</h4>';
                         echo '<p>' . $user_record['email'] . '</p>';
                         ?>

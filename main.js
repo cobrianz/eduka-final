@@ -160,4 +160,14 @@ const initApp = () => {
     });
 };
 
+function checkout(){
+    balance = document.getElementById('balance');
+    totalAmount = document.getElementById('totalAmount').innerText;
+    console.log(totalAmount);
+    if(balance > totalAmount){
+        balnce = balance - totalAmount;
+        alert(balance);
+    }
+}
+
 initApp();
