@@ -52,14 +52,16 @@ require 'config/database.php';
                                 <i class="bx bx-user"></i>
                             </a>
                             <?php
-                                $id = $_SESSION['user-id'];
-                                $fetch_user_query = "SELECT * FROM users WHERE id = $id";
-                                $run_query = mysqli_query($connection, $fetch_user_query);
-                                $user_record = mysqli_fetch_assoc($run_query);
-                                
-                                ?>
-                                <div class="icon">
-                                <i>Ksh.<b id='balance'><?php echo ' '.$user_record['balance']?> </b></i>
+                            $id = $_SESSION['user-id'];
+                            $fetch_user_query = "SELECT * FROM users WHERE id = $id";
+                            $run_query = mysqli_query($connection, $fetch_user_query);
+                            $user_record = mysqli_fetch_assoc($run_query);
+
+                            ?>
+                            <div class="icon">
+                                <i>Ksh.<b id='balance'>
+                                        <?php echo ' ' . $user_record['balance'] ?>
+                                    </b></i>
                             </div>
                         <?php else: ?>
                             <a href="login.php" class="icon">
@@ -75,7 +77,9 @@ require 'config/database.php';
                             <i class="bx bx-user"></i>
                         </a>
                         <div class="icon">
-                        <i>Ksh.<b id='balance'><?php echo ' '.$user_record['balance']?> </b></i>
+                            <i>Ksh.<b id='balance'>
+                                    <?php echo ' ' . $user_record['balance'] ?>
+                                </b></i>
                         </div>
                     <?php else: ?>
                         <a href="login.php" class="icon">
@@ -118,8 +122,22 @@ require 'config/database.php';
             </div>
             <div id="total">
                 <span>Total</span>
-                <span>Ksh. <span id="totalAmount">0</span></span>
+                <span>
+                    Ksh. <span id="totalAmount">0</span>
+                </span>
             </div>
+            <?php if (isset ($_SESSION['user-id'])): ?>
+                <div id="balance">
+
+                    <span>Balance</span>
+
+                    <span>
+                    </span>
+                    </span>
+                    <span id="balance">Ksh.
+                        <?php echo $user_record['balance'] ?>
+                </div>
+            <?php endif; ?>
         </div>
 
 
@@ -128,8 +146,6 @@ require 'config/database.php';
             <button class="checkOut" onclick="checkout()">Buy</button>
         </div>
     </div>
-
-    <script src="main.js"></script>
     <footer class="footer">
         <div class="row">
             <div class="col d-flex">
@@ -155,6 +171,232 @@ require 'config/database.php';
             </div>
         </div>
     </footer>
+    <script>
+        let listProductHTML = document.querySelector('.listProduct');
+        let listCartHTML = document.querySelector('.listCart');
+        let iconCart = document.querySelector('.icon-cart');
+        let iconCartSpan = document.querySelector('.icon-cart span');
+        let body = document.querySelector('body');
+        let closeCart = document.querySelector('.close');
+        let products = [];
+        let cart = [];
+
+        iconCart.addEventListener('click', () => {
+            body.classList.toggle('showCart');
+        });
+
+        closeCart.addEventListener('click', () => {
+            body.classList.toggle('showCart');
+        });
+
+        const addDataToHTML = () => {
+            listProductHTML.innerHTML = ''; // Clear previous product list
+            if (products.length > 0) {
+                products.forEach(product => {
+                    let newProduct = document.createElement('div');
+                    newProduct.dataset.id = product.id;
+                    newProduct.classList.add('item');
+                    newProduct.innerHTML = `
+                    <div class="products_title">
+                        <h2>${product.name}</h2>
+                        <span class="discount">${product.discount}</span>
+                    </div>
+                    <img src="./products/${product.thumbnail}" alt="product image">
+                    <div class="price">Ksh. ${product.price}</div>
+                    <button class="addCart">Add To Cart</button>`;
+                    listProductHTML.appendChild(newProduct);
+                });
+            }
+        };
+
+        listProductHTML.addEventListener('click', (event) => {
+            let positionClick = event.target;
+            if (positionClick.classList.contains('addCart')) {
+                let id_product = positionClick.parentElement.dataset.id;
+                addToCart(id_product);
+            }
+        });
+
+        const addToCart = (product_id) => {
+            let positionThisProductInCart = cart.findIndex((value) => value.product_id == product_id);
+            if (cart.length <= 0) {
+                cart.push({
+                    product_id: product_id,
+                    quantity: 1
+                });
+            } else if (positionThisProductInCart < 0) {
+                cart.push({
+                    product_id: product_id,
+                    quantity: 1
+                });
+            } else {
+                cart[positionThisProductInCart].quantity = cart[positionThisProductInCart].quantity + 1;
+            }
+            addCartToHTML();
+            addCartToMemory();
+        };
+
+        const addCartToMemory = () => {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        };
+
+        const addCartToHTML = () => {
+            listCartHTML.innerHTML = '';
+            let totalQuantity = 0;
+            let subtotalAmount = 0;
+            if (cart.length > 0) {
+                cart.forEach(item => {
+                    totalQuantity += item.quantity;
+                    let positionProduct = products.findIndex((value) => value.id == item.product_id);
+                    let info = products[positionProduct];
+                    subtotalAmount += info.price * item.quantity;
+                    let newItem = document.createElement('div');
+                    newItem.classList.add('item');
+                    newItem.dataset.id = item.product_id;
+
+                    listCartHTML.appendChild(newItem);
+                    newItem.innerHTML = `
+                    <div class="image">
+                        <img src="./products/${info.thumbnail}" alt="product image">
+                    </div>
+                    <div class="name">
+                        ${info.name}
+                    </div>
+                    <div class="totalPrice">Ksh. ${info.price * item.quantity}</div>
+                    <div class="quantity">
+                        <span class="minus"><</span>
+                        <span>${item.quantity}</span>
+                        <span class="plus">></span>
+                    </div>
+                `;
+                });
+            }
+            iconCartSpan.innerText = totalQuantity;
+
+            // Update payment details
+            const taxRate = 0.2; // Example tax rate (20%)
+            const taxAmount = subtotalAmount * taxRate;
+            const totalAmount = subtotalAmount + taxAmount;
+            document.getElementById('subtotalAmount').innerText = subtotalAmount.toFixed(2);
+            document.getElementById('taxAmount').innerText = taxAmount.toFixed(2);
+            document.getElementById('totalAmount').innerText = totalAmount.toFixed(2);
+
+            // Update cart object with payment details
+            cart.subtotal = subtotalAmount.toFixed(2);
+            cart.tax = taxAmount.toFixed(2);
+            cart.total = totalAmount.toFixed(2);
+        };
+
+        listCartHTML.addEventListener('click', (event) => {
+            let positionClick = event.target;
+            if (positionClick.classList.contains('minus') || positionClick.classList.contains('plus')) {
+                let product_id = positionClick.parentElement.parentElement.dataset.id;
+                let type = 'minus';
+                if (positionClick.classList.contains('plus')) {
+                    type = 'plus';
+                }
+                changeQuantityCart(product_id, type);
+            }
+        });
+
+        const changeQuantityCart = (product_id, type) => {
+            let positionItemInCart = cart.findIndex((value) => value.product_id == product_id);
+            if (positionItemInCart >= 0) {
+                switch (type) {
+                    case 'plus':
+                        cart[positionItemInCart].quantity = cart[positionItemInCart].quantity + 1;
+                        break;
+
+                    default:
+                        let changeQuantity = cart[positionItemInCart].quantity - 1;
+                        if (changeQuantity > 0) {
+                            cart[positionItemInCart].quantity = changeQuantity;
+                        } else {
+                            cart.splice(positionItemInCart, 1);
+                        }
+                        break;
+                }
+            }
+            addCartToHTML();
+            addCartToMemory();
+        };
+
+        const initApp = () => {
+            fetch('products.json')
+                .then(response => response.json())
+                .then(data => {
+                    products = data;
+                    addDataToHTML();
+                    if (localStorage.getItem('cart')) {
+                        cart = JSON.parse(localStorage.getItem('cart'));
+                        addCartToHTML();
+                    }
+                });
+        };
+
+        function checkout() {
+            if (localStorage.getItem('cart')) {
+                var cart = JSON.parse(localStorage.getItem('cart'));
+                writeToCartFile(cart);
+            } else {
+                console.log("Cart is empty.");
+            }
+        }
+
+        function writeToCartFile(cart) {
+            // Generate random string
+            var randomString = generateRandomString(20);
+
+            // Calculate subtotal, tax, and total using addCartToHTML() logic
+            var subtotalAmount = 0;
+            var totalQuantity = 0;
+            cart.forEach(item => {
+                let positionProduct = products.findIndex((value) => value.id == item.product_id);
+                let info = products[positionProduct];
+                subtotalAmount += info.price * item.quantity;
+                totalQuantity += item.quantity;
+            });
+            const taxRate = 0.2;
+            const taxAmount = subtotalAmount * taxRate;
+            const totalAmount = subtotalAmount + taxAmount;
+
+            // Create cart object with random string as key
+            var cartObject = {};
+            cartObject[randomString] = {
+                cart: cart,
+                subtotal: subtotalAmount,
+                tax: taxAmount,
+                total: totalAmount
+            };
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "write_cart.php", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log("Cart data has been written to cart.json");
+                    localStorage.removeItem('cart'); // Clear cart from localStorage after successful checkout
+                    window.location.href = "Thanks.php"; // Redirect to Thanks.php
+                }
+            };
+            xhr.send(JSON.stringify(cartObject));
+        }
+
+
+        function generateRandomString(length) {
+            var result = '';
+            var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for (var i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            return result;
+        }
+
+        checkout(); // Call checkout function when the page loads
+        initApp();
+    </script>
+
 </body>
 
 </html>

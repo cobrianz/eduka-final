@@ -446,6 +446,8 @@ SIGNUP SECTION
     width: 100vw;
     height: 100vh;
     display: flex;
+    justify-content: center;
+    align-items: center;
     background: #ebedf1;
 }
 
@@ -453,16 +455,10 @@ SIGNUP SECTION
     margin: 2rem 5rem;
 }
 
-.signup__thumbnail{
-    width: 50%;
-    height: 100vh;
-    background-image: url(./assets/images/image-3.svg);
-    background-position: center;
-    background-size: cover;
-}
 
 .signup__form-container {
     width: 50%;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -471,6 +467,7 @@ SIGNUP SECTION
 
 
 .form {
+    margin: 0 auto;
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -505,15 +502,6 @@ form small {
 SIGNIN SECTION
 
 */
-
-.signin__thumbnail {
-    width: 50%;
-    height: 100vh;
-    background-image: url(./assets/images/image-1.svg);
-    background-position: center;
-    background-size: cover;
-}
-
 .form span {
     display: flex;
     justify-content: space-between;
@@ -531,13 +519,7 @@ SIGNIN SECTION
 
 */
 
-.forgot__password-thumbnail {
-    width: 50%;
-    height: 100vh;
-    background-image: url(./assets/images/image-2.svg);
-    background-position: center;
-    background-size: cover;
-}
+
 
 .form> small a {
     display: flex;

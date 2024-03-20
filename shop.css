@@ -137,14 +137,17 @@ font-weight: bold;
   gap: 1rem;
 }
 .cartTab .btn{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-}
-.cartTab button{
-    background-color: #E8BC0E;
+    display: flex;
+    align-items: center;
+  }
+  .cartTab button{
+    background-color: #6a5acd;
+    width: 50%;
+    font-size: 2rem;
+    padding: 2rem;
     border: none;
     font-family: Poppins;
-    font-weight: 500;
+    font-weight: bold;
     cursor: pointer;
 }
 .cartTab .close{

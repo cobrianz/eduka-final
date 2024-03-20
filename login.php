@@ -19,13 +19,6 @@ unset($_SESSION['login-data']);
 
 <body>
     <div class="signup__coontainer">
-        <div class="signin__thumbnail">
-            <a href="<?= ROOT_URL ?>">
-                <div class="logo">
-                    <h1>EDUKA</h1>
-                </div>
-            </a>
-        </div>
         <div class="signup__form-container"> 
             <div class="form">
                 <h1>Welcome 👋🏼</h1>

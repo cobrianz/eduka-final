@@ -9,8 +9,10 @@ if (!isset($_SESSION['user-id'])) {
 
 $email = $_SESSION['update-data']['email'] ?? null;
 $name = $_SESSION['update-data']['name'] ?? null;
+$amount = $_SESSION['deposit-data']['amount'] ?? null;
 $password = $_SESSION['update-data']['password'] ?? null;
 unset($_SESSION['update-data']);
+unset($_SESSION['deposit-data']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -79,6 +81,10 @@ unset($_SESSION['update-data']);
                 <p>My Orders</p>
             </span>
             <span class="aside__span">
+                <i class="fa fa-money" aria-hidden="true"></i>
+                <p>Deposit</p>
+            </span>
+            <span class="aside__span">
                 <i class="fa fa-sign-out" aria-hidden="true" style="color: red;"></i>
                 <p><a href="./logout.php" style="color: #c27272;">Logout</a></p>
             </span>
@@ -145,6 +151,32 @@ unset($_SESSION['update-data']);
                     <small><a href="#">View Order</a></small>
                 </div>
             </div>
+            <div id="main" class="main purchase__info">
+    <?php if (isset($_SESSION['deposit-success'])): ?>
+        <div class="alert__message success">
+            <p>
+                <?= $_SESSION['deposit-success'];
+                unset($_SESSION['deposit-success']);
+                ?>
+            </p>
+        </div>
+    <?php elseif (isset($_SESSION['deposit'])): ?>
+        <div class="alert__message error">
+            <p>
+                <?= $_SESSION['deposit'];
+                unset($_SESSION['deposit']);
+                ?>
+            </p>
+        </div>
+    <?php endif ?>
+    <h1>Deposit</h1>
+    <form action="<?= ROOT_URL ?>deposit.php" method="POST">
+        <label for="name">Enter Amount *</label>
+        <input type="number" value="" placeholder="<?= isset($user_record['balance']) ? $user_record['balance'] : ''; ?>" name="amount">
+        <button type="submit" class="btn" name="submit">Deposit</button>
+    </form>
+</div>
+
 
             <div id="main" class="main">
                 <div class="itemDetails">
@@ -163,6 +195,7 @@ unset($_SESSION['update-data']);
                     </div>
                 </div>
             </div>
+           
         </main>
     </div>
     <!-- SERVICES SECTION -->

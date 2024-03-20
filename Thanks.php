@@ -8,11 +8,14 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/c8e4d183c2.js" crossorigin="anonymous"></script>
 
+    <head>
+    </head>
+
 </head>
 
 <body>
     <nav class="navbar container">
-        <a href="./index.html">
+        <a href="./index.php">
             <div class="logo">
                 <h1>EDUKA</h1>
             </div>
@@ -20,23 +23,41 @@
         <ul>
             <li><a href="#">Home</a></li>
             <li><a href="#">Shop</a></li>
-            <li><a href="./account.html">Account</a></li>
-            <li><a href="./cart.html"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a></li>
+            <li><a href="./account.php">Account</a></li>
         </ul>
         <i class="fa fa-bars"></i>
         <i class="fa fa-times"></i>
     </nav>
 
     <div class="thanks__hero">
+        <?php
+
+        // Read the JSON file
+        $json_data = file_get_contents('cart.json');
+
+        // Decode JSON data
+        $cart_data = json_decode($json_data, true);
+
+        // Check if decoding was successful
+        if ($cart_data === null) {
+            echo "Error decoding JSON data.\n";
+            // Stop further execution if there's an error
+            exit;
+        }
+
+        // Iterate over each entry in the cart data
+        foreach ($cart_data as $key => $cart_entry) {
+        }
+        ?>
+
         <h1>Thanks you for your order!</h1>
-        <p>Your order has been confirmed. You will 
-            receive an email confirmation shortly. 
-            Your order ID 
-            <span>955wertyfa65798etwg95bnch45</span>.
+        <p>Your order has been confirmed. You will
+            receive an email confirmation shortly.
+            Your order ID
+            <a href="./account.php"><b style="font-size: 1.2rem"><?=$key?></b></a>.
         </p>
         <div class="thanks__btns">
-            <a href="#" class="btn">View order</a>
-            <a href="#" class="btn">View all order</a>
+            <a href="./receipts.php" class="btn">View order</a>
         </div>
     </div>
     <!-- SERVICES SECTION -->
@@ -66,9 +87,9 @@
         </div>
     </section>
 
-<!-- FOOTER SECTION -->
+    <!-- FOOTER SECTION -->
 
-<footer>
+    <footer>
         <h1>EDUKA</h1>
         <p>&copy;Eduka. All rights are reserved</p>
         <div class="social__icons">
@@ -76,7 +97,7 @@
             <a href="#"><img src="./assets/icons/instagram.svg" alt=""></a>
             <a href="#"><img src="./assets/icons/twitter.svg" alt=""></a>
         </div>
-</footer>
+    </footer>
 
     <script src="./app.js"></script>
 </body>

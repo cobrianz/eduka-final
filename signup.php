@@ -27,13 +27,6 @@ unset($_SESSION['signup-data']);
 
 <body>
     <div class="signup__coontainer">
-        <div class="signup__thumbnail">
-            <a href="./index.php">
-                <div class="logo">
-                    <h1>EDUKA</h1>
-                </div>
-            </a>
-        </div>
         <div class="signup__form-container">
             <div class="form">
                 <h1>Create Account 👋🏼</h1>

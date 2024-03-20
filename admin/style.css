@@ -201,7 +201,8 @@ aside h3 {
 
 aside .sidebar a {
     display: flex;
-    color: var(--color-info-dark);
+    color: var(--color-dark);
+    font-size: 1.5rem;
     margin: 1rem;
     gap: 1rem;
     align-items: center;

@@ -252,10 +252,31 @@ unset($_SESSION['message-data']);
     <p>All the latest picked from designer of our store</p>
   </div>
 
-  <div class="listProduct">
+  <div class="product-center">
+    <?php
+         $fetch_product_query = "SELECT * FROM products";
+         $fetch_product_result = mysqli_query($connection, $fetch_product_query);
 
-</div>
-
+         // Convert the record into an associative array
+         while($product_record = mysqli_fetch_assoc($fetch_product_result)):
+    ?>
+    <div class="product-item">
+      <div class="overlay">
+        <a href="productDetails.html" class="product-thumb">
+          <img src="./products/<?=$product_record['thumbnail']?>" alt="" />
+        </a>
+      </div>
+      <div class="product-info">
+        <span><?= $product_record['category'] ?></span>
+        <a href="productDetails.html"><?= $product_record['name'] ?></a>
+        <h4>ksh. <?= $product_record['price'] ?></h4>
+      </div>
+      <ul class="icons">
+        <li><i class="bx bx-cart" onclick="rediects()"></i></li>
+      </ul>
+    </div>
+    <?php endwhile; ?>
+  </div>
 
 </section>
 
@@ -307,7 +328,7 @@ unset($_SESSION['message-data']);
           <textarea name="message" id="message" cols="30" rows="15" value="<?= $message ?>" required></textarea>
         </div>
         <button type="submit" id="contact__submit" class="form__submit" name="submit">send</button>
-      </form>
+    </form>
     </div>
   </div>
 </section>
@@ -320,7 +341,7 @@ require './footer/footer.php';
 ?>
 
 
-<!-- PopUp -->
+<!-- 
 <div class="popup hide-popup">
   <div class="popup-content">
     <div class="popup-close">
@@ -343,12 +364,16 @@ require './footer/footer.php';
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/glide.min.js"></script>
 <script src="./js/slider.js"></script>
 <script src="./js/index.js"></script>
-<script src="../main.js"></script>
+<script>
+function rediects(){
+   window.location.href="shop.php";
+}
+</script>
 
 </html>

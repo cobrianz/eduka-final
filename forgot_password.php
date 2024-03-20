@@ -9,16 +9,9 @@
 </head>
 <body>
     <div class="signup__coontainer">
-        <div class="forgot__password-thumbnail">
-            <a href="./index.html">
-                <div class="logo">
-                    <h1>EDUKA</h1>
-                </div>
-            </a>
-        </div>
         <div class="signup__form-container">
         <div class="form">
-            <small><a href="./login.html"><img src="./assets/icons/arrow-left.svg" alt=""><span>Back</span></a></small>
+            <small><a href="./login.php"><img src="./assets/icons/arrow-left.svg" alt=""><span>Back</span></a></small>
             <h1>Forgot Password</h1>
             <p>Enter your registered email address, we'll send 
                 your a code to reset your password.</p>
