@@ -13,8 +13,8 @@
         <div class="profile">
             <div class="info">
                 <?php
-                if (isset($_SESSION['user-id'])):
-                    $id = $_SESSION['user-id'];
+                if (isset($_SESSION['is_admin'])):
+                    $id = $_SESSION['is_admin'];
                     $fetch_user_query = "SELECT * FROM users WHERE id = $id";
                     $run_query = mysqli_query($connection, $fetch_user_query);
                     $user_record = mysqli_fetch_assoc($run_query);
@@ -23,8 +23,7 @@
                     <small class="text-muted">
                         Admin
                     </small>
-                <?php else:
-                    header('Location :' . ROOT_URL . 'login.php');
+                <?php
                 endif
                 ?>
 

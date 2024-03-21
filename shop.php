@@ -344,43 +344,46 @@ require 'config/database.php';
         }
 
         function writeToCartFile(cart) {
-            // Generate random string
-            var randomString = generateRandomString(20);
+    // Generate random string
+    var randomString = generateRandomString(20);
 
-            // Calculate subtotal, tax, and total using addCartToHTML() logic
-            var subtotalAmount = 0;
-            var totalQuantity = 0;
-            cart.forEach(item => {
-                let positionProduct = products.findIndex((value) => value.id == item.product_id);
-                let info = products[positionProduct];
-                subtotalAmount += info.price * item.quantity;
-                totalQuantity += item.quantity;
-            });
-            const taxRate = 0.2;
-            const taxAmount = subtotalAmount * taxRate;
-            const totalAmount = subtotalAmount + taxAmount;
-
-            // Create cart object with random string as key
-            var cartObject = {};
-            cartObject[randomString] = {
-                cart: cart,
-                subtotal: subtotalAmount,
-                tax: taxAmount,
-                total: totalAmount
-            };
-
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "write_cart.php", true);
-            xhr.setRequestHeader("Content-Type", "application/json");
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    console.log("Cart data has been written to cart.json");
-                    localStorage.removeItem('cart'); // Clear cart from localStorage after successful checkout
-                    window.location.href = "Thanks.php"; // Redirect to Thanks.php
-                }
-            };
-            xhr.send(JSON.stringify(cartObject));
+    // Calculate subtotal, tax, and total using cart data
+    var subtotalAmount = 0;
+    var totalQuantity = 0;
+    cart.forEach(item => {
+        let positionProduct = products.findIndex((value) => value.id == item.product_id);
+        if (positionProduct !== -1) { // Ensure product is found
+            let info = products[positionProduct];
+            subtotalAmount += info.price * item.quantity;
+            totalQuantity += item.quantity;
         }
+    });
+    const taxRate = 0.2;
+    const taxAmount = subtotalAmount * taxRate;
+    const totalAmount = subtotalAmount + taxAmount;
+
+    // Create cart object with random string as key
+    var cartObject = {};
+    cartObject[randomString] = {
+        cart: cart,
+        subtotal: subtotalAmount,
+        tax: taxAmount,
+        total: totalAmount
+    };
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "write_cart.php", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log("Cart data has been written to cart.json");
+            localStorage.removeItem('cart'); // Clear cart from localStorage after successful checkout
+            window.location.href = "Thanks.php"; // Redirect to Thanks.php
+        }
+    };
+    xhr.send(JSON.stringify(cartObject));
+}
+
 
 
         function generateRandomString(length) {

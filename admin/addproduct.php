@@ -6,6 +6,7 @@ $details = $_SESSION['product-data']['details'] ?? null;
 $price = $_SESSION['product-data']['price'] ?? null;
 $discount = $_SESSION['product-data']['dis$discount'] ?? null;
 $category = $_SESSION['product-data']['category'] ?? null;
+$quantity = $_SESSION['product-data']['quantity'] ?? null;
 
 //delete the product data session
 unset($_SESSION['product-data']);
@@ -50,6 +51,8 @@ unset($_SESSION['product-data']);
                 <input type="text" name="discount" value="<?=$discount?>">
                 <label for="price">Category *</label>
                 <input type="text" name="category" value="<?=$category?>">
+                <label for="quantity">Quantity *</label>
+                <input type="number" name="quantity" value="<?=$quantity?>">
                 <label for="thumbnail">Thumbnail *</label>
                 <input type="file" name="thumbnail">
                 <button type="submit" class="btn form__btn" name="submit">Add Product</button>

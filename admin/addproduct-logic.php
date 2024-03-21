@@ -10,10 +10,11 @@ if(isset($_POST['submit'])) {
     $price = filter_var($_POST['price'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);   
     $discount = filter_var($_POST['discount'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);   
     $category = filter_var($_POST['category'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);   
+    $quantity = filter_var($_POST['quantity'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);   
     $thumbnail = $_FILES['thumbnail'];
 
     // Validate inputs
-    if(!$name || !$description || !$details || !$price || !$category || !$thumbnail['name']) {
+    if(!$name || !$description || !$details || !$price || !$category || !$quantity || !$thumbnail['name']) {
         $_SESSION['product'] = "Please fill in all fields.";
         header('Location: ' . ROOT_URL . '/admin/addproduct.php');
         exit();
@@ -28,8 +29,8 @@ if(isset($_POST['submit'])) {
     $row = mysqli_num_rows($result);
 
     $id = $row++;
-    $insert_product_query = "INSERT INTO products (id, name, description, details, price, discount, category, thumbnail) 
-                             VALUES ('$id','$name', '$description', '$details', '$price','$discount','$category', '$thumbnail_name')";
+    $insert_product_query = "INSERT INTO products (id, name, description, details, price, discount, category, quantity, thumbnail) 
+                             VALUES ('$id','$name', '$description', '$details', '$price','$discount','$category', '$quantity', '$thumbnail_name')";
     $sql = mysqli_query($connection, $insert_product_query);
 
     if($sql) {

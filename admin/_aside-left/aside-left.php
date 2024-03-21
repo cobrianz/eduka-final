@@ -56,7 +56,7 @@
 
                     <h3>Add Employees</h3>
                 </a>
-                <a href="./login.php">
+                <a href="./logout.php">
                     <span><i class="fa fa-sign-out" aria-hidden="true"></i></span>
 
                     <h3>Logout</h3>

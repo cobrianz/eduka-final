@@ -176,9 +176,7 @@ unset($_SESSION['deposit-data']);
         <button type="submit" class="btn" name="submit">Deposit</button>
     </form>
 </div>
-
-
-            <div id="main" class="main">
+   <div id="main" class="main">
                 <div class="itemDetails">
                     <h3>Order: 955wertyfa65798etwg95bnch45</h3>
                     <span>ID: 955wertyfa65798etwg95bnch45</span>
@@ -194,8 +192,7 @@ unset($_SESSION['deposit-data']);
                         </div>
                     </div>
                 </div>
-            </div>
-           
+            </div>          
         </main>
     </div>
     <!-- SERVICES SECTION -->
