@@ -169,7 +169,7 @@ unset($_SESSION['deposit-data']);
             </p>
         </div>
     <?php endif ?>
-    <h1>Deposit</h1>
+    <h1 id='deposit'>Deposit</h1>
     <form action="<?= ROOT_URL ?>deposit.php" method="POST">
         <label for="name">Enter Amount *</label>
         <input type="number" value="" placeholder="<?= isset($user_record['balance']) ? $user_record['balance'] : ''; ?>" name="amount">

@@ -128,15 +128,12 @@ require 'config/database.php';
             </div>
             <?php if (isset ($_SESSION['user-id'])): ?>
                 <div id="balance">
-
                     <span>Balance</span>
-
-                    <span>
-                    </span>
-                    </span>
-                    <span id="balance">Ksh.
+                    <span>Ksh.
                         <?php echo $user_record['balance'] ?>
+                    </span>
                 </div>
+
             <?php endif; ?>
         </div>
 
@@ -337,52 +334,82 @@ require 'config/database.php';
         function checkout() {
             if (localStorage.getItem('cart')) {
                 var cart = JSON.parse(localStorage.getItem('cart'));
-                writeToCartFile(cart);
+                var subtotalAmount = parseFloat(document.getElementById('totalAmount').innerText);
+                var balanceElement = document.getElementById('balance');
+                if (subtotalAmount !== null && balanceElement !== null) {
+                    var balance = parseFloat(balanceElement.innerText.replace('Ksh.', '').trim());
+
+                    // Check if balance is sufficient
+                    if (balance >= subtotalAmount) {
+                        // Perform the transaction and update balance in the database
+                        // You need to send an AJAX request to your PHP script for updating the balance
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", "update_balance.php", true);
+                        xhr.setRequestHeader("Content-Type", "application/json");
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState === 4 && xhr.status === 200) {
+                                console.log("Transaction successful!");
+                                writeToCartFile(cart); // Proceed with writing cart data to file
+                                window.location.href = "Thanks.php";
+                            }
+                        };
+                        xhr.send(JSON.stringify({ subtotalAmount: subtotalAmount }));
+
+                    } else {
+                        // Redirect the user to account page if balance is insufficient
+                        window.location.href = "account.php#deposit";
+                    }
+                } else {
+                    console.log("subtotalAmount or balance element is null.");
+                    window.location.href = 'login.php';
+                }
             } else {
                 console.log("Cart is empty.");
             }
         }
 
+
+
         function writeToCartFile(cart) {
-    // Generate random string
-    var randomString = generateRandomString(20);
+            // Generate random string
+            var randomString = generateRandomString(20);
 
-    // Calculate subtotal, tax, and total using cart data
-    var subtotalAmount = 0;
-    var totalQuantity = 0;
-    cart.forEach(item => {
-        let positionProduct = products.findIndex((value) => value.id == item.product_id);
-        if (positionProduct !== -1) { // Ensure product is found
-            let info = products[positionProduct];
-            subtotalAmount += info.price * item.quantity;
-            totalQuantity += item.quantity;
+            // Calculate subtotal, tax, and total using cart data
+            var subtotalAmount = 0;
+            var totalQuantity = 0;
+            cart.forEach(item => {
+                let positionProduct = products.findIndex((value) => value.id == item.product_id);
+                if (positionProduct !== -1) { // Ensure product is found
+                    let info = products[positionProduct];
+                    subtotalAmount += info.price * item.quantity;
+                    totalQuantity += item.quantity;
+                }
+            });
+            const taxRate = 0.2;
+            const taxAmount = subtotalAmount * taxRate;
+            const totalAmount = subtotalAmount + taxAmount;
+
+            // Create cart object with random string as key
+            var cartObject = {};
+            cartObject[randomString] = {
+                cart: cart,
+                subtotal: subtotalAmount,
+                tax: taxAmount,
+                total: totalAmount
+            };
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "write_cart.php", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log("Cart data has been written to cart.json");
+                    localStorage.removeItem('cart'); // Clear cart from localStorage after successful checkout
+                    window.location.href = "Thanks.php"; // Redirect to Thanks.php
+                }
+            };
+            xhr.send(JSON.stringify(cartObject));
         }
-    });
-    const taxRate = 0.2;
-    const taxAmount = subtotalAmount * taxRate;
-    const totalAmount = subtotalAmount + taxAmount;
-
-    // Create cart object with random string as key
-    var cartObject = {};
-    cartObject[randomString] = {
-        cart: cart,
-        subtotal: subtotalAmount,
-        tax: taxAmount,
-        total: totalAmount
-    };
-
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "write_cart.php", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log("Cart data has been written to cart.json");
-            localStorage.removeItem('cart'); // Clear cart from localStorage after successful checkout
-            window.location.href = "Thanks.php"; // Redirect to Thanks.php
-        }
-    };
-    xhr.send(JSON.stringify(cartObject));
-}
 
 
 

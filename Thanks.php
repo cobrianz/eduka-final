@@ -21,8 +21,8 @@
             </div>
         </a>
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Shop</a></li>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="./shop.php">Shop</a></li>
             <li><a href="./account.php">Account</a></li>
         </ul>
         <i class="fa fa-bars"></i>
@@ -58,6 +58,8 @@
         </p>
         <div class="thanks__btns">
             <a href="./receipts.php" class="btn">View order</a>
+            <a href="./shop.php" class="btn">Continue Shopping</a>
+
         </div>
     </div>
     <!-- SERVICES SECTION -->
