@@ -11,10 +11,24 @@ if(isset($_POST['submit'])) {
     $discount = filter_var($_POST['discount'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);   
     $category = filter_var($_POST['category'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);   
     $quantity = filter_var($_POST['quantity'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);   
+    $cost = filter_var($_POST['cost'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);   
     $thumbnail = $_FILES['thumbnail'];
-
+    function generateTransactionId($length) {
+        $characters = '0123456789'; // Only numbers
+        $charactersLength = strlen($characters);
+        $TransactionId = '';
+    
+        for ($i = 0; $i < $length; $i++) {
+            $TransactionId .= $characters[rand(0, $charactersLength - 1)];
+        }
+    
+        return $TransactionId;
+    }
+    
+    
+    $TransactionId = 'TRANS' . generateTransactionId(4); 
     // Validate inputs
-    if(!$name || !$description || !$details || !$price || !$category || !$quantity || !$thumbnail['name']) {
+    if(!$name || !$description || !$details || !$price || !$category || !$quantity || !$cost || !$thumbnail['name']) {
         $_SESSION['product'] = "Please fill in all fields.";
         header('Location: ' . ROOT_URL . '/admin/addproduct.php');
         exit();
@@ -29,9 +43,14 @@ if(isset($_POST['submit'])) {
     $row = mysqli_num_rows($result);
 
     $id = $row++;
-    $insert_product_query = "INSERT INTO products (id, name, description, details, price, discount, category, quantity, thumbnail) 
-                             VALUES ('$id','$name', '$description', '$details', '$price','$discount','$category', '$quantity', '$thumbnail_name')";
+    $insert_product_query = "INSERT INTO products (id, name, description, details, price, discount, category,  quantity, cost, thumbnail) 
+                             VALUES ('$id','$name', '$description', '$details', '$price','$discount','$category', '$quantity', '$cost', '$thumbnail_name')";
     $sql = mysqli_query($connection, $insert_product_query);
+    $transaction_date = date('Y-m-d H:i:s');
+    $description = "Purchased stock ".$quantity."" .$name."s";
+    $insert_purchase_query = "INSERT INTO finances (transaction_id, user_id, transaction_date, description, credit) 
+                              VALUES ('$TransactionId', 'Admin', '$transaction_date', '$description', '$cost')";
+     $insert_purchase_result = mysqli_query($connection, $insert_purchase_query);
 
     if($sql) {
         $_SESSION['product-success'] = "Product added successfully.";

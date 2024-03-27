@@ -44,7 +44,7 @@
                     </span>
                     <div class="middle">
                         <div class="left">
-                            <h3>Employees Expenses</h3>
+                            <h3>Expenses</h3>
                             <h1>Ksh. 614,160</h1>
                         </div>
                         <div class="progress">

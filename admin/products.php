@@ -32,6 +32,7 @@ require './header/header.php';
                             <th>Discount</th>
                             <th>Description</th>
                             <th>Quantity</th>
+                            <th>Cost</th>
                             <th>Status</th>
                             <th></th>
                         </tr>
@@ -57,12 +58,13 @@ require './header/header.php';
 
                             } ?></td>
                             <td><?= $product_record['description'] ?></td>
-                             <td><?= $product_record['quantity'] ?></td>
-                             <td class="primary"><?php if($product_record['quantity'] > 0){
+                            <td><?= $product_record['quantity'] ?></td>
+                            <td><?= $product_record['cost'] ?></td>
+                            <td class="primary"><?php if($product_record['quantity'] > 0){
                                 echo 'Available'; 
                             } else {
                                 echo "Not Available"; 
-
+                                
                             } ?></td>
                              <td></td>
                         </tr>

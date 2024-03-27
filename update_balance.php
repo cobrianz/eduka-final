@@ -14,7 +14,20 @@ $user_id = $_SESSION['user-id'];
 // Retrieve user's balance from the database
 $query = "SELECT balance FROM users WHERE id = $user_id";
 $result = mysqli_query($connection, $query);
+function generateTransactionId($length) {
+    $characters = '0123456789'; // Only numbers
+    $charactersLength = strlen($characters);
+    $TransactionId = '';
 
+    for ($i = 0; $i < $length; $i++) {
+        $TransactionId .= $characters[rand(0, $charactersLength - 1)];
+    }
+
+    return $TransactionId;
+}
+
+
+$TransactionId = 'TRANS' . generateTransactionId(4); 
 if ($result) {
     $row = mysqli_fetch_assoc($result);
     $balance = $row['balance'];
@@ -22,6 +35,7 @@ if ($result) {
     // Read cart details from cart.json
     $cart_json = file_get_contents("cart.json");
     $cart_data = json_decode($cart_json, true); // Decode JSON data as associative array
+
 
     // Loop through each cart entry in cart.json
     foreach ($cart_data as $cart_id => $cart_info) {
@@ -34,7 +48,11 @@ if ($result) {
             $new_balance = $balance - $subtotalAmount;
             $update_balance_query = "UPDATE users SET balance = $new_balance WHERE id = $user_id";
             $update_balance_result = mysqli_query($connection, $update_balance_query);
-
+            $transaction_date = date('Y-m-d H:i:s');
+            $description = "Purchased order ".$cart_id;
+            $insert_purchase_query = "INSERT INTO finances (transaction_id, user_id, transaction_date, description, debit) 
+                                      VALUES ('$TransactionId', '$user_id', '$transaction_date', '$description', '$subtotalAmount')";
+             $insert_purchase_result = mysqli_query($connection, $insert_purchase_query);
             if ($update_balance_result) {
                 // Transaction successful, now update product quantities
                 foreach ($cart as $item) {
@@ -67,6 +85,7 @@ if ($result) {
                 
                 // All inserts successful
                 echo json_encode(array("success" => true));
+                file_put_contents("cart.json", json_encode(array()));
             } else {
                 // Error updating balance
                 echo json_encode(array("error" => "Failed to update balance."));

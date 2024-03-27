@@ -28,6 +28,7 @@ require './header/header.php';
                         <button class="deleteButton" style="color: red;
                         text-align: right;
                         padding: 0.5rem 1rem;
+                        background-color: transparent;
                         "
                          data-id="<?= $user_record['id'] ?>">Delete</button>
                     </div>

@@ -25,6 +25,11 @@
 
                     <h3>Products</h3>
                 </a>
+                <a href="./finances.php">
+                    <span> <i class="fa fa-dollar" aria-hidden="true"></i></span>
+
+                    <h3>Finances</h3>
+                </a>
                 <a href="messages.php">
                     <span> <i class="fa fa-envelope-open" aria-hidden="true"></i></span>
 
