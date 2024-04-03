@@ -260,6 +260,7 @@ aside .sidebar .message-count{
 
 main{
     margin-top: 1.4rem;
+    z-index: 999;
 }
 
 main .date{

@@ -51,7 +51,7 @@
 
                     <h3>Reports</h3>
                 </a>
-                <a href="setting.php">
+                <a href="#">
                     <span> <i class="fa fa-cogs" aria-hidden="true"></i></span>
 
                     <h3>Settings</h3>

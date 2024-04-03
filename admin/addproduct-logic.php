@@ -55,7 +55,7 @@ if (isset($_POST['submit'])) {
 
     if ($sql) {
         $_SESSION['product-success'] = "Product added successfully.";
-        header('Location: ' . ROOT_URL . '../products_json_fetch.php');
+        header('Location: ' . ROOT_URL . '/admin/products.php');
         exit();
         
     } else {

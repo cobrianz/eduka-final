@@ -7,13 +7,16 @@
     <title>Eduka</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/c8e4d183c2.js" crossorigin="anonymous"></script>
-
+   <!--  <script>
+        const thanks =document.getElementById('thanks');
+        thanks.onload = runFireworks();
+    </script> -->
     <head>
     </head>
 
 </head>
 
-<body>
+<body id='thanks'>
     <nav class="navbar container">
         <a href="./index.php">
             <div class="logo">

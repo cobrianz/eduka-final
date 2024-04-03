@@ -36,36 +36,6 @@
 
     <!-- end of top -->
     <div class="recent-updates">
-        <h2>Recent Updates</h2>
-        <div class="updates">
-            <div class="update">
-                <div class="profile-photo">
-                    <img src="./images/profile.svg" alt="">
-                </div>
-                <div class="message">
-                    <p><b>Brian Cheruiyot</b> Received his order of Oraimo Digital headphones</p>
-                    <small class="text-muted">2 minutes ago</small>
-                </div>
-            </div>
-            <div class="update">
-                <div class="profile-photo">
-                    <img src="./images/profile.svg" alt="">
-                </div>
-                <div class="message">
-                    <p><b>Cyrus Cheruiyot</b> Received his order of Vitron 24" Tv</p>
-                    <small class="text-muted">5 minutes ago</small>
-                </div>
-            </div>
-            <div class="update">
-                <div class="profile-photo">
-                    <img src="./images/profile.svg" alt="">
-                </div>
-                <div class="message">
-                    <p><b>Maureen Cheruiyot</b> Received his order of Asus Notebook 15 laptop</p>
-                    <small class="text-muted">8 minutes ago</small>
-                </div>
-            </div>
-        </div>
 
         <!-- End of Recent Updates -->
 

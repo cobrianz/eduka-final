@@ -44,7 +44,7 @@ function mergeData($existingData, $newData) {
 sleep(2);
 
 // Redirect to shop.php
-header('Location: ' . ROOT_URL . './admin/products.php');
+header('Location: ' . ROOT_URL . 'shop.php');
 // Read existing JSON data from the file
 $file_path = 'products.json';
 $existing_json = file_get_contents($file_path);

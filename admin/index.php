@@ -35,7 +35,7 @@
                             </div>
                         </div>
                     </div>
-                    <small class="text-muted">Last 24 hours</small>
+                    
                 </div>
                 <!-- end of sales -->
                 <div class="expenses">
@@ -56,7 +56,7 @@
                             </div>
                         </div>
                     </div>
-                    <small class="text-muted">Last 24 hours</small>
+                    
                 </div>
                 <!-- end of Expenses -->
                 <div class="income">
@@ -77,7 +77,7 @@
                             </div>
                         </div>
                     </div>
-                    <small class="text-muted">Last 24 hours</small>
+                    
                 </div>
                 <!-- end of income -->
             </div>
@@ -103,7 +103,7 @@
         $employees = mysqli_num_rows($rslt); ?>
         <script>
     const xValues = ["Customers", "Employees"];
-    const yValues = [<?php echo $users; ?>, <?php echo $employees; ?>];
+    const yValues = [<?=$users; ?>, <?=$employees; ?>];
     const barColors = [
         "#ff8800",
         "#7380ec",
@@ -126,7 +126,7 @@ new Chart("Chart", {
   }
 });
 const x = ["Products", "Employees", "users", "admin"];
-const y = [5, <?php echo $employees; ?>, <?php echo $users; ?>, <?php echo 2; ?>];
+const y = [5, <?=$employees; ?>, <?=$users; ?>, 3];
 const barColor = ["green", "7380ec","#677483","#ff0000"];
 
 new Chart("myChart", {
