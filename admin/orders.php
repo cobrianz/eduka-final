@@ -14,8 +14,10 @@
                         <tr style="font-size: 1.5rem">
                             <th>Order ID</th>
                             <th>Email</th>
-                            <th>Products</th>
-                            <th>Amount</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Total Amount</th>
                             <th>Date</th>
                         </tr>
                     </thead>
@@ -33,7 +35,8 @@
                                 $user_id = $row['user_id']; // Assuming user_id is available in cart table
                                 $product_id = $row['product_id']; // Assuming product_id is available in cart table
                                 $quantity = $row['quantity'];
-                                $cost = $row['cost'];
+                                $total_amount = $row['cost']; // Calculate total amount
+                                $unit_price = $total_amount/$quantity;
                                 $created_at = $row['created_at']; // Assuming created_at is available in cart table
 
                                 // Fetch user email based on user_id (Assuming users table)
@@ -50,14 +53,16 @@
                                     <td><?php echo $order_id; ?></td>
                                     <td><?php echo $user_email; ?></td>
                                     <td><?php echo $product_name; ?></td>
-                                    <td><?php echo $cost; ?></td>
+                                    <td><?php echo $quantity; ?></td>
+                                    <td><?php echo $unit_price; ?></td>
+                                    <td><?php echo $total_amount; ?></td>
                                     <td><?php echo $created_at; ?></td>
                                 </tr>
                         <?php
                             }
                         } else {
                             // No orders found
-                            echo "<tr><td colspan='6'>No orders found.</td></tr>";
+                            echo "<tr><td colspan='7'>No orders found.</td></tr>";
                         }
                         ?>
                     </tbody>
